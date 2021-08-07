@@ -65,10 +65,11 @@ namespace TicTacToe
                 field.Text = fieldCage.Value.ToString();
                 checkedFields[cagePosition - 1] = true;
 
+                ChangePlayerColors();
                 CheckIfWon(fieldCage.Value);
                 CheckIfDraw();
                 ChangePlayer();
-                ChangePlayerColors();
+                
             }
             catch (Exception error) 
             {
@@ -99,6 +100,9 @@ namespace TicTacToe
                 startButton.Visible = true;
                 isGameStart = false;
                 score.Text = $"{score1} : {score2}";
+
+                playerLabel1.BackColor = Color.LightCyan;
+                playerLabel2.BackColor = Color.LightCyan;
             }
         }
         private void CheckIfDraw()
@@ -117,6 +121,8 @@ namespace TicTacToe
                 startButton.Text = "Restart";
                 startButton.Visible = true;
                 isGameStart = false;
+                playerLabel1.BackColor = Color.LightCyan;
+                playerLabel2.BackColor = Color.LightCyan;
             }
         }
         private void ChangeFieldColor(int[] combination)
