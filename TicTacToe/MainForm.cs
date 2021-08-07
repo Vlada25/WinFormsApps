@@ -12,12 +12,13 @@ namespace TicTacToe
 {
     public partial class MainForm : Form
     {
-        private static bool isGameStart = false;
-        private static bool isPlayer1 = true;
-       
-        private static readonly bool[] checkedFields = new bool[]{false, false, false,
-                                                                  false, false, false,
-                                                                  false, false, false};
+        private bool isGameStart = false;
+        private bool isPlayer1 = true;
+        private int score1 = 0,
+            score2 = 0;
+        private readonly bool[] checkedFields = {false, false, false,
+                                                 false, false, false,
+                                                 false, false, false};
         
         public MainForm()
         {
@@ -25,12 +26,23 @@ namespace TicTacToe
         }
         private void StartButton_Click(object sender, EventArgs e)
         {
+            Button[] fieldCages = { field1, field2, field3, field4, field5, field6, field7, field8, field9 };
+            foreach (Button cage in fieldCages)
+            {
+                cage.Text = "";
+            }
+            for (int i = 0; i < checkedFields.Length; i++)
+            {
+                checkedFields[i] = false;
+            }
             isGameStart = true;
             startButton.Visible = false;
             errorLabel.Text = "";
             winLabel.Text = "";
             playerLabel1.BackColor = Color.LightGreen;
             playerLabel2.BackColor = Color.LightGray;
+            FieldCage.PosX_List = new List<int>();
+            FieldCage.PosO_List = new List<int>();
         }
         private void FieldClick(int cagePosition, Button field)
         {
@@ -52,27 +64,10 @@ namespace TicTacToe
                 field.Text = fieldCage.Value.ToString();
                 checkedFields[cagePosition - 1] = true;
 
-                if (FieldCage.IsPlayerWin(fieldCage.Value))
-                {
-                    string result;
-                    if (isPlayer1)
-                    {
-                        result = "Player 1 (X) won!!!";
-                    }
-                    else
-                    {
-                        result = "Player 2 (O) won!!!";
-                    }
-                    winLabel.Text = result;
-                    startButton.Text = "Restart";
-                    startButton.Visible = true;
-                    isGameStart = false;
-                }
-                else
-                {
-                    ChangePlayer();
-                    ChangePlayerColors();
-                }
+                CheckIfWon(fieldCage.Value);
+                CheckIfDraw();
+                ChangePlayer();
+                ChangePlayerColors();
             }
             catch (Exception error) 
             {
@@ -80,6 +75,46 @@ namespace TicTacToe
             }
         }
 
+        private void CheckIfWon(FieldCage.Values value)
+        {
+            if (FieldCage.IsPlayerWin(value))
+            {
+                string result;
+                if (isPlayer1)
+                {
+                    result = "Player 1 (X) won!!!";
+                    score1++;
+                }
+                else
+                {
+                    result = "Player 2 (O) won!!!";
+                    score2++;
+                }
+                winLabel.Text = result;
+                startButton.Text = "Restart";
+                startButton.Visible = true;
+                isGameStart = false;
+                score.Text = $"{score1} : {score2}";
+            }
+        }
+        private void CheckIfDraw()
+        {
+            bool allOccupied = true;
+            foreach (bool value in checkedFields)
+            {
+                if (value == false)
+                {
+                    allOccupied = false;
+                }
+            }
+            if (allOccupied)
+            {
+                winLabel.Text = "There is a draw!!!";
+                startButton.Text = "Restart";
+                startButton.Visible = true;
+                isGameStart = false;
+            }
+        }
         private void ChangePlayerColors()
         {
             if (playerLabel1.BackColor == Color.LightGreen)
@@ -149,6 +184,6 @@ namespace TicTacToe
         {
             FieldClick(9, field9);
         }
-        
+
     }
 }

@@ -43,6 +43,7 @@ namespace TicTacToe
             this.startButton = new System.Windows.Forms.Button();
             this.errorLabel = new System.Windows.Forms.Label();
             this.winLabel = new System.Windows.Forms.Label();
+            this.score = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // field1
@@ -202,11 +203,22 @@ namespace TicTacToe
             this.winLabel.Size = new System.Drawing.Size(0, 20);
             this.winLabel.TabIndex = 13;
             // 
+            // score
+            // 
+            this.score.AutoSize = true;
+            this.score.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.score.Location = new System.Drawing.Point(182, 9);
+            this.score.Name = "score";
+            this.score.Size = new System.Drawing.Size(45, 24);
+            this.score.TabIndex = 14;
+            this.score.Text = "0 : 0";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(436, 449);
+            this.Controls.Add(this.score);
             this.Controls.Add(this.winLabel);
             this.Controls.Add(this.errorLabel);
             this.Controls.Add(this.startButton);
@@ -245,6 +257,7 @@ namespace TicTacToe
         private System.Windows.Forms.Button startButton;
         private System.Windows.Forms.Label errorLabel;
         private System.Windows.Forms.Label winLabel;
+        private System.Windows.Forms.Label score;
     }
 }
 
