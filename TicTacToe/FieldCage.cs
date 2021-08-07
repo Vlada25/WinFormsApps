@@ -19,11 +19,12 @@ namespace TicTacToe
         public static List<int> PosO_List = new List<int>();
 
         private const int CountOfVariants = 8, 
-            MinCombinationLenght = 3, 
+            CombinationLenght = 3, 
             FirstInd = 0, 
             SecondInd = 1, 
             ThirdInd = 2;
 
+        private static int indexOfWonCombination; 
         private readonly static int[,] winCombinations = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 },
                                                            { 1, 4, 7 }, { 2, 5, 8 }, { 3, 6, 9 },
                                                            { 1, 5, 9 }, { 3, 5, 7 } };
@@ -53,7 +54,7 @@ namespace TicTacToe
                 valuePosList = PosO_List;
             }
 
-            if (valuePosList.Count < MinCombinationLenght)
+            if (valuePosList.Count < CombinationLenght)
             {
                 return false;
             }
@@ -64,10 +65,20 @@ namespace TicTacToe
                     valuePosList.Contains(winCombinations[i, SecondInd]) &&
                     valuePosList.Contains(winCombinations[i, ThirdInd]))
                 {
+                    indexOfWonCombination = i;
                     return true;
                 }
             }
             return false;
+        }
+        public static int[] GetWonCombination()
+        {
+            int[] arr = new int[CombinationLenght];
+            for (int i = 0; i < CombinationLenght; i++)
+            {
+                arr[i] = winCombinations[indexOfWonCombination, i];
+            }
+            return arr;
         }
     }
 }

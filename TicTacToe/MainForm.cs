@@ -30,6 +30,7 @@ namespace TicTacToe
             foreach (Button cage in fieldCages)
             {
                 cage.Text = "";
+                cage.BackColor = Color.White;
             }
             for (int i = 0; i < checkedFields.Length; i++)
             {
@@ -40,7 +41,7 @@ namespace TicTacToe
             errorLabel.Text = "";
             winLabel.Text = "";
             playerLabel1.BackColor = Color.LightGreen;
-            playerLabel2.BackColor = Color.LightGray;
+            playerLabel2.BackColor = Color.LightCyan;
             FieldCage.PosX_List = new List<int>();
             FieldCage.PosO_List = new List<int>();
         }
@@ -90,6 +91,9 @@ namespace TicTacToe
                     result = "Player 2 (O) won!!!";
                     score2++;
                 }
+
+                ChangeFieldColor(FieldCage.GetWonCombination());
+
                 winLabel.Text = result;
                 startButton.Text = "Restart";
                 startButton.Visible = true;
@@ -115,17 +119,32 @@ namespace TicTacToe
                 isGameStart = false;
             }
         }
+        private void ChangeFieldColor(int[] combination)
+        {
+            Button[] fieldCages = { field1, field2, field3, field4, field5, field6, field7, field8, field9 };
+            foreach (int num in combination)
+            {
+                for (int i = 0; i < fieldCages.Length; i++)
+                {
+                    if (num == i + 1)
+                    {
+                        fieldCages[i].BackColor = Color.LightGreen;
+                        break;
+                    }
+                }
+            }
+        }
         private void ChangePlayerColors()
         {
             if (playerLabel1.BackColor == Color.LightGreen)
             {
-                playerLabel1.BackColor = Color.LightGray;
+                playerLabel1.BackColor = Color.LightCyan;
                 playerLabel2.BackColor = Color.LightGreen;
             }
             else
             {
                 playerLabel1.BackColor = Color.LightGreen;
-                playerLabel2.BackColor = Color.LightGray;
+                playerLabel2.BackColor = Color.LightCyan;
             }
         }
         private void ChangePlayer()
